@@ -610,8 +610,7 @@ createMixedGraph = function(dir=T, shift_v=0, alpha=0.85){
       if(length(pr_a_id)){
         registerDoParallel(cores=4)
         pr_l = foreach(p=1:nrow(pr_comb), .packages = c('igraph','Matrix')) %dopar% {
-          #a=pr_iter2(pr_net, directed = F, weights = e_attr[[pr_comb[p,2]]][w_Edge], beta = vert_attr[[pr_comb[p,1]]][w_Vert], alpha=0.85)$vector
-          a=page_rank(pr_net, directed = F, algo='PRPACK', personalized = vert_attr[[pr_comb[p,1]]][w_Vert], weights = e_attr[[pr_comb[p,2]]][w_Edge], damping=alpha)$vector
+          a=pr_iter2(pr_net, directed = F, weights = e_attr[[pr_comb[p,2]]][w_Edge], beta = vert_attr[[pr_comb[p,1]]][w_Vert], alpha=0.85)$vector
           a=a/max(a)
           a[pr_a_id]
         }
